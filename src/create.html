@@ -1,0 +1,43 @@
+<template>
+    <h1>Add time entry</h1>
+    <form>
+        <label for="client">Client</label>
+        <br />
+        <select id="client" name="client">
+            <option id="${client.Id}" repeat.for="client of this.clients">${client.Name}</option>
+        </select>
+        <br />
+        <label for="project">Project</label>
+        <br />
+        <select id="project" name="project">
+            <option id="${project.Id}" repeat.for="project of this.projects">${project.Name}</option>
+        </select>
+        <br />
+        <label for="phase">Phase</label>
+        <br />
+        <select id="phase" name="phase">
+            <option id="${phase.Id}" repeat.for="phase of this.phases">${phase.Name}</option>
+        </select>
+        <br />
+        <label for="billingType">Billing Type</label>
+        <br />
+        <select id="billingType" name="billingType">
+            <option id="${billingType.Id}" repeat.for="billingType of this.billingTypes">${billingType.Name}</option>
+        </select>
+        <br />
+        <label for="hours">Hours</label>
+        <br />
+        <input type="text" id="hours" name="hours" placeholder="0" />
+        <br />
+        <label for="minutes">Minutes</label>
+        <br />
+        <input type="text" id="minutes" name="minutes" placeholder="0" />
+        <br />
+        <label for="description">Description</label>
+        <br />
+        <textarea id="description" name="description"></textarea>
+        <hr />
+        <input  type="submit" value="Save" />
+        <hr />
+    </form>
+</template>
