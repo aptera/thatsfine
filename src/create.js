@@ -7,6 +7,7 @@ export class Create {
     clients = [];
     selectedClient = null;
     projects = [];
+    filteredProjects = [];
     selectedProject = null;
     phases = [];
     selectedPhase = null;
@@ -22,23 +23,35 @@ export class Create {
                     headers: {
                         'Accept' : 'application/json',
                         'Content-Type' : 'application/json',
-                        'Cookie' : "__RequestVerificationToken=sCKhMXURVaVt6K9EJia6ysOxO_1hh3u7S6LptAIJ9arhVe_kmRqVIdTmax-gZBTZamzYEdi3hLFXtSKT4wPqWDjmbmo1; ARRAffinity=4b1f17a64743ea29e40334ecb4ceae81cccac01aba1e3e5845861c5314d560af; .AspNet.ApplicationCookie=Cu39T3iYpyezzSKdYt0z7HBMeF7zIdz4pRTXK9Zrc6gsZdVaJA0G_Y20hmYv_2ztfxKwpPmO1wOlMG-hG9PIIAetlai9O9oTR8Sht-0_cGX3eTjJ_Wc_0kRYE4tUEhUR3uohyWL73wmUwJggITGVsbxZlaupIweya2GHM-6nrTaTFk-TpV1zdOQCwfacdUcPLKFFkA_HCkkpqi16RmiYQg-nZEsNtPib9GswodpmaHmna1eiwQmsBkjLI6Ozai2L96ew5u_HIlgrFqBwAWrnmoEje7Rb6zyYZVJnqIVQ-XoYS3Sxp2dE7YejpH5Ab8ab6qyOaGxBj274CV83aak8PSRMQEDi_No1zbzoIso4fqlLbQZnsr0jUibqM38D3b-c-P60u-UKF6f11YhRgTbukvFe4EzyZvnP2pTcw_r3VxDDV6g4gEvRbMNO3X79f2y87J6hi3URjVAQlGfgD2mX5rQ_2pwFp2EnPyxgX19aY4iGCQEF; __uvt="
+                        'Cookie' : "__RequestVerificationToken=iL6NH0Gaw3FXoONyF4ZvhMwON64j6Z5UrQVpF_-y-FoVOyhjzsK3pR1oFAS_bO1hvxEiklwoXFRd-_WaNR0fjvO15GU1; ARRAffinity=4b1f17a64743ea29e40334ecb4ceae81cccac01aba1e3e5845861c5314d560af; .AspNet.ApplicationCookie=WxYeODq0XYGWqIXGAjIn2HCrLHQmhVgW4AxSw4ET561zfePR3654u76TWyvnJ2pTBh6s6BVGjE0sE-L-b3y4qojSpj8u_Ae923XKBwHplyg57elRb4PAXA5zRQljy3MnxyPrVKmy6yUhwmdR5Wf6rVIMPhPty2HZN1JlzwVJl_juz2QRoLBxgvP1YjzFvxBLEJTNS9tPN5FgACxOJxeiR9vQ-77eEOXtQjDWuBkdaAmmiy1utsBU76czp3u0aLLToz2TyJN8hyHMwgT4QOaxdSxijH1mDic4QtaOemDheC6UWV_acGy3pSVqWqcrXyJXRQEfXwX3a6lJxN2UFBwCk6Ho28R4gOrUTZdL6g9a_SEXcWtpex0lGnBvRpi42EscnJscwN3-FDTMsFA94OUUTArKOLF-JmbyJp-I-KpDUk930P5N37VzwsmCfpII5JpeUeHKfxi_tqcLaCAlYKiuwLkfD6VV_uKIllv2AJq56NWIbXLN; __uvt="
                     }
                 })
                 .withBaseUrl('https://localhost:9001/api/v1/')
-                 //.withBaseUrl('https://thereisno.trystructure.com/api/v1/')
         });
 
         this.http = http;
     }
 
+    getProjectsForClients() {
+
+    }
+
     activate() {
-        return this.http.fetch('clients')
+        return this.http.fetch('clients?onlyActive=true')
             .then(
               response => response.json()
             )
             .then(
               clients => this.clients = clients
+            )
+            .then(
+              this.http.fetch('projects')
+                  .then(
+                    response => response.json()
+                  )
+                  .then(
+                    projects => this.projects = projects
+                  )
             );
     }
 }

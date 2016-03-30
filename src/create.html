@@ -1,17 +1,18 @@
 <template>
+    <require from="./ValueConverters/ProjectFilter"></require>
     <h1>${heading}</h1>
 
     <form>
         <label for="client">Client</label>
         <br />
-        <select id="client" name="client" value.bind="selectedClient">
-            <option value.bind="client.Id" repeat.for="client of clients">${client.Name}</option>
+        <select id="client" name="client" value.bind="selectedClient" change.delegate="getProjectsForClients()">
+            <option value.bind="client.Name" repeat.for="client of clients">${client.Name}</option>
         </select>
         <br />
         <label for="project">Project</label>
         <br />
         <select id="project" name="project" value.bind="selectedProject">
-            <option value.bind="project.Id" repeat.for="project of projects">${project.Name}</option>
+            <option value.bind="project.Id" repeat.for="project of projects | projectFilter: selectedClient">${project.Name}</option>
         </select>
         <br />
         <label for="phase">Phase</label>
