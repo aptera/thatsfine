@@ -6,8 +6,6 @@ var browserSync = require('browser-sync');
 // at http://localhost:9000
 gulp.task('serve', ['build'], function(done) {
     var server = browserSync.create("first server"); // Create a named instance
-    var proxy = browserSync.create("proxy");
-
   server.init({
     online: false,
     open: false,
@@ -24,23 +22,6 @@ gulp.task('serve', ['build'], function(done) {
       }
 
     }
-  });
-
-   proxy.init({
-    online: false,
-    open: false,
-    port: 9001,
-      https: true,
-    ui: {
-        port: 3002
-    },
-    proxy: {
-        target: "https://thereisno.trystructure.com/api/v1/",
-        middleware: function (req, res, next) {
-            res.setHeader('Access-Control-Allow-Credentials', 'true');
-            next();
-        }
-   }
   });
 });
 
