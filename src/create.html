@@ -5,14 +5,14 @@
     <form>
         <label for="client">Client</label>
         <br />
-        <select id="client" name="client" value.bind="selectedClient" change.delegate="getProjectsForClients()">
+        <select id="client" name="client" value.bind="selectedClientName">
             <option value.bind="client.Name" repeat.for="client of clients">${client.Name}</option>
         </select>
         <br />
         <label for="project">Project</label>
         <br />
-        <select id="project" name="project" value.bind="selectedProject">
-            <option value.bind="project.Id" repeat.for="project of projects | projectFilter: selectedClient">${project.Name}</option>
+        <select id="project" name="project" value.bind="selectedProjectId">  <!--change.delegate="getBillingAndPhaseType()"-->
+            <option value.bind="project.Id" repeat.for="project of projects | projectFilter: selectedClientName">${project.Name}</option>
         </select>
         <br />
         <label for="phase">Phase</label>
