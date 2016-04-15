@@ -12,6 +12,10 @@ gulp.task('serve', ['build'], function(done) {
     online: false,
     open: false,
     port: 9000,
+<<<<<<< HEAD
+    https: false,
+=======
+>>>>>>> ccc75e1ef08c49496718fec34173c6b51eb8cbd9
     ui: {
         port: 3001
     },
@@ -24,6 +28,11 @@ gulp.task('serve', ['build'], function(done) {
 
     }
   });
+<<<<<<< HEAD
+
+=======
+  
+>>>>>>> ccc75e1ef08c49496718fec34173c6b51eb8cbd9
    proxy.init({
     online: false,
     open: false,
@@ -35,8 +44,14 @@ gulp.task('serve', ['build'], function(done) {
     proxy: {
         target: "https://thereisno.trystructure.com/api/v1/",
         middleware: function (req, res, next) {
+<<<<<<< HEAD
+            res.setHeader('Access-Control-Allow-Credentials', 'true');
+            req.headers['Cookie']='__RequestVerificationToken=iL6NH0Gaw3FXoONyF4ZvhMwON64j6Z5UrQVpF_-y-FoVOyhjzsK3pR1oFAS_bO1hvxEiklwoXFRd-_WaNR0fjvO15GU1; ARRAffinity=4b1f17a64743ea29e40334ecb4ceae81cccac01aba1e3e5845861c5314d560af; .AspNet.ApplicationCookie=WxYeODq0XYGWqIXGAjIn2HCrLHQmhVgW4AxSw4ET561zfePR3654u76TWyvnJ2pTBh6s6BVGjE0sE-L-b3y4qojSpj8u_Ae923XKBwHplyg57elRb4PAXA5zRQljy3MnxyPrVKmy6yUhwmdR5Wf6rVIMPhPty2HZN1JlzwVJl_juz2QRoLBxgvP1YjzFvxBLEJTNS9tPN5FgACxOJxeiR9vQ-77eEOXtQjDWuBkdaAmmiy1utsBU76czp3u0aLLToz2TyJN8hyHMwgT4QOaxdSxijH1mDic4QtaOemDheC6UWV_acGy3pSVqWqcrXyJXRQEfXwX3a6lJxN2UFBwCk6Ho28R4gOrUTZdL6g9a_SEXcWtpex0lGnBvRpi42EscnJscwN3-FDTMsFA94OUUTArKOLF-JmbyJp-I-KpDUk930P5N37VzwsmCfpII5JpeUeHKfxi_tqcLaCAlYKiuwLkfD6VV_uKIllv2AJq56NWIbXLN; __uvt=';
+            next();
+=======
             req.headers['Cookie']='Get Cookie From Structue, Do not Commit/Save Cookie';
             next();  
+>>>>>>> ccc75e1ef08c49496718fec34173c6b51eb8cbd9
         }
    }
   });
