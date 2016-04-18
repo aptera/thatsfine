@@ -18,6 +18,7 @@ System.config({
     "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.1.1",
     "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.1.4",
     "aurelia-router": "npm:aurelia-router@1.0.0-beta.1.1.3",
+    "aurelia-binding": "npm:aurelia-binding@1.0.0-beta.1.2.2",
     "babel": "npm:babel-core@5.8.35",
     "babel-runtime": "npm:babel-runtime@5.8.35",
     "core-js": "npm:core-js@1.2.6",

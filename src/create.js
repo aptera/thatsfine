@@ -1,7 +1,8 @@
-import {BindingEngine, inject} from 'aurelia-framework';
+import {inject} from 'aurelia-framework';
+import {ObserverLocator} from 'aurelia-binding';
 import {HttpClient} from 'aurelia-fetch-client';
 
-@inject(HttpClient, BindingEngine)
+@inject(HttpClient, ObserverLocator)
 export class Create {
     heading = 'Add A New Billable Time Entry';
     clients = [];
@@ -13,32 +14,29 @@ export class Create {
     selectedPhase = null;
     billingTypes = [];
     selectedBillingType = null;
-    bindingEngine = null;
     subscription = null;
 
-    constructor(http, bindingEngine) {
-      this.bindingEngine = bindingEngine;
+    constructor(http, observerLocator) {
       this.clients = [];
         http.configure(config => {
             config
                 .withDefaults({
-                    // credentials: 'include',
+                    //credentials: 'include',
                     headers: {
                         'Accept' : 'application/json',
-                        'Content-Type' : 'application/json',
-                        'Cookie' : "Get Cookie From Structue, Do not Commit/Save Cookie"
+                        'Content-Type' : 'application/json'
                     }
                 })
                 .withBaseUrl('https://localhost:9001/api/v1/')
         });
 
         this.http = http;
-        this.subscription = this.bindingEngine.propertyObserver(this, 'selectedProjectId').subscribe(this.getBillingAndPhaseType);
+        observerLocator.getObserver(this, 'selectedProjectId').subscribe(this.getBillingAndPhaseType.apply(this, arguments));
     }
 
-    getBillingAndPhaseType(projectId, oldValue, model, test, test2) {
-      var billingTypesUrl = 'projects/' + projectId + '/billingTypes';
-      var phaseTypeUrl = 'projects/' + projectId + '/phases';
+    getBillingAndPhaseType(newValue, oldValue) {
+      var billingTypesUrl = 'projects/' + this.selectedProjectId + '/projectroles';
+      var phaseTypeUrl = 'projects/' + this.selectedProjectId + '/phases';
       this.billingTypes = [];
       this.phases = [];
       this.http.fetch(billingTypesUrl)
