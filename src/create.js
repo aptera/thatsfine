@@ -21,10 +21,11 @@ export class Create {
         http.configure(config => {
             config
                 .withDefaults({
-                    //credentials: 'include',
+                    // credentials: 'include',
                     headers: {
                         'Accept' : 'application/json',
-                        'Content-Type' : 'application/json'
+                        'Content-Type' : 'application/json',
+                        'Cookie' : "Get Cookie From Structue, Do not Commit/Save Cookie "
                     }
                 })
                 .withBaseUrl('https://localhost:9001/api/v1/')
