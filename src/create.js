@@ -14,7 +14,9 @@ export class Create {
     selectedPhase = null;
     billingTypes = [];
     selectedBillingType = null;
-    subscription = null;
+    hours = null;
+    minutes = null;
+    description = null;
 
     constructor(http, observerLocator) {
       this.clients = [];
@@ -24,20 +26,22 @@ export class Create {
                     // credentials: 'include',
                     headers: {
                         'Accept' : 'application/json',
-                        'Content-Type' : 'application/json',
-                        'Cookie' : "Get Cookie From Structue, Do not Commit/Save Cookie "
+                        'Content-Type' : 'application/json'
                     }
                 })
                 .withBaseUrl('https://localhost:9001/api/v1/')
         });
 
         this.http = http;
-        observerLocator.getObserver(this, 'selectedProjectId').subscribe(this.getBillingAndPhaseType.apply(this, arguments));
+        observerLocator.getObserver(this, 'selectedProjectId').subscribe((newValue, oldValue) => this.getBillingAndPhaseType(newValue));
     }
 
-    getBillingAndPhaseType(newValue, oldValue) {
-      var billingTypesUrl = 'projects/' + this.selectedProjectId + '/projectroles';
-      var phaseTypeUrl = 'projects/' + this.selectedProjectId + '/phases';
+    getBillingAndPhaseType(projectId) {
+        if (projectId == null) {
+            return;
+        }
+      var billingTypesUrl = 'projects/' + projectId + '/roles';
+      var phaseTypeUrl = 'projects/' + projectId + '/phases';
       this.billingTypes = [];
       this.phases = [];
       this.http.fetch(billingTypesUrl)
@@ -47,6 +51,27 @@ export class Create {
                    .then(response => response.json())
                    .then(phases => this.phases = phases)
             );
+    }
+
+    addBillableTimeEntry() {
+        var timeEntry = {
+            "Id": 0,
+            "ClientName": this.selectedClientName,
+            "ProjectId": this.selectedProjectId,
+            "PhaseId": this.selectedPhase,
+            "Hours": this.hours,
+            "Minutes": this.minutes,
+            "Description": this.description,
+            "ProjectRoleName": this.selectedBillingType,
+            "Date": new Date().toLocaleDateString()
+        };
+        
+        this.http.fetch('time/billable', {
+            method: 'post',
+            body: JSON.stringify(timeEntry)
+        });
+        // .then(response => response.json())
+        //   .then(billableTimeEntryId => this.router.navigate('view/' + billableTimeEntryId));
     }
 
     activate() {

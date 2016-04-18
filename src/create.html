@@ -2,7 +2,7 @@
     <require from="./ValueConverters/ProjectFilter"></require>
     <h1>${heading}</h1>
 
-    <form>
+    <form submit.delegate="addBillableTimeEntry()">
         <label for="client">Client</label>
         <br />
         <select id="client" name="client" value.bind="selectedClientName">
@@ -24,22 +24,22 @@
         <label for="billingType">Billing Type</label>
         <br />
         <select id="billingType" name="billingType" value.bind="selectedBillingType">
-            <option value.bind="billingType.Id" repeat.for="billingType of billingTypes">${billingType.Name}</option>
+            <option value.bind="billingType.Name" repeat.for="billingType of billingTypes">${billingType.Name}</option>
         </select>
         <br />
         <label for="hours">Hours</label>
         <br />
-        <input type="text" id="hours" name="hours" placeholder="0" />
+        <input type="text" id="hours" name="hours" placeholder="0" value.bind="hours" />
         <br />
         <label for="minutes">Minutes</label>
         <br />
-        <input type="text" id="minutes" name="minutes" placeholder="0" />
+        <input type="text" id="minutes" name="minutes" placeholder="0" value.bind="minutes" />
         <br />
         <label for="description">Description</label>
         <br />
-        <textarea id="description" name="description"></textarea>
+        <textarea id="description" name="description" value.bind="description"></textarea>
         <hr />
-        <input  type="submit" value="Save" />
+        <input  type="submit" value="Add Time Entry" />
         <hr />
     </form>
 </template>
