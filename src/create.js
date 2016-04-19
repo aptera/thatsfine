@@ -1,36 +1,18 @@
 import {inject} from 'aurelia-framework';
-<<<<<<< HEAD
-import {HttpClient} from 'aurelia-fetch-client';
-//import 'fetch';
-=======
 import {ObserverLocator} from 'aurelia-binding';
 import {Router} from 'aurelia-router';
 import {API} from './api';
->>>>>>> createBillableTimeEntry
 
 @inject(ObserverLocator, Router, API)
 export class Create {
     heading = 'Add A New Billable Time Entry';
     clients = [];
-<<<<<<< HEAD
-    projects = [];
-=======
     selectedClientName = null;
     projects = [];
     filteredProjects = [];
     selectedProjectId = null;
->>>>>>> createBillableTimeEntry
     phases = [];
     billingTypes = [];
-<<<<<<< HEAD
-
-    constructor(http) {
-        http.configure(config => {
-            config
-                .useStandardConfiguration()
-                .withBaseUrl('https://thereisno.trystructure.com/api/v1/')
-        });
-=======
     selectedBillingType = null;
     hours = null;
     minutes = null;
@@ -74,7 +56,6 @@ export class Create {
         .then(this.api.getPhasesAsJSON(projectId)
                 .then(phases => this.phases = phases));
     }
->>>>>>> createBillableTimeEntry
 
     addBillableTimeEntry() {
         var timeEntry = {
@@ -100,12 +81,6 @@ export class Create {
         //    .then(billableTimeEntryId => this.router.navigate('view/' + billableTimeEntryId));
     }
 
-<<<<<<< HEAD
-    activate() {
-        //return this.http.fetch('clients')
-        //    .then(response => response.json())
-        //    .then(clients => this.clients = clients);
-=======
     // without API refactoring
     // activate() {
     //     return this.http.fetch('clients?onlyActive=true')
@@ -123,6 +98,5 @@ export class Create {
             .then(clients => this.clients = clients)
             .then(this.api.getProjectsAsJSON()
                     .then(projects => this.projects = projects));   
->>>>>>> createBillableTimeEntry
     }
 }
