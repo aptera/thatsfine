@@ -1,8 +1,9 @@
 import {inject} from 'aurelia-framework';
 import {ObserverLocator} from 'aurelia-binding';
-import {HttpClient} from 'aurelia-fetch-client';
+import {Router} from 'aurelia-router';
+import {API} from './api';
 
-@inject(HttpClient, ObserverLocator)
+@inject(ObserverLocator, Router, API)
 export class Create {
     heading = 'Add A New Billable Time Entry';
     clients = [];
@@ -18,39 +19,43 @@ export class Create {
     minutes = null;
     description = null;
 
-    constructor(http, observerLocator) {
-      this.clients = [];
-        http.configure(config => {
-            config
-                .withDefaults({
-                    // credentials: 'include',
-                    headers: {
-                        'Accept' : 'application/json',
-                        'Content-Type' : 'application/json'
-                    }
-                })
-                .withBaseUrl('https://localhost:9001/api/v1/')
-        });
-
-        this.http = http;
+    constructor(observerLocator, router, api) {
+        this.clients = [];
         observerLocator.getObserver(this, 'selectedProjectId').subscribe((newValue, oldValue) => this.getBillingAndPhaseType(newValue));
+        this.router = router;
+        this.api = api;
     }
+    
+    // without API refactoring
+    // getBillingAndPhaseType(projectId) {
+    //     if (projectId == null) {
+    //         return;
+    //     }
+    //   var billingTypesUrl = 'projects/' + projectId + '/roles';
+    //   var phaseTypeUrl = 'projects/' + projectId + '/phases';
+    //   this.billingTypes = [];
+    //   this.phases = [];
+    //   this.http.fetch(billingTypesUrl)
+    //         .then(response => response.json())
+    //         .then(billingTypes => this.billingTypes = billingTypes)
+    //         .then(this.http.fetch(phaseTypeUrl)
+    //                .then(response => response.json())
+    //                .then(phases => this.phases = phases)
+    //         );
+    // }
 
+    // with API refactoring
     getBillingAndPhaseType(projectId) {
         if (projectId == null) {
             return;
         }
-      var billingTypesUrl = 'projects/' + projectId + '/roles';
-      var phaseTypeUrl = 'projects/' + projectId + '/phases';
+
       this.billingTypes = [];
       this.phases = [];
-      this.http.fetch(billingTypesUrl)
-            .then(response => response.json())
-            .then(billingTypes => this.billingTypes = billingTypes)
-            .then(this.http.fetch(phaseTypeUrl)
-                   .then(response => response.json())
-                   .then(phases => this.phases = phases)
-            );
+      this.api.getBilingTypesAsJSON(projectId)
+        .then(billingTypes => this.billingTypes = billingTypes)
+        .then(this.api.getPhasesAsJSON(projectId)
+                .then(phases => this.phases = phases));
     }
 
     addBillableTimeEntry() {
@@ -66,21 +71,33 @@ export class Create {
             "Date": new Date().toLocaleDateString()
         };
         
-        this.http.fetch('time/billable', {
-            method: 'post',
-            body: JSON.stringify(timeEntry)
-        });
-        // .then(response => response.json())
-        //   .then(billableTimeEntryId => this.router.navigate('view/' + billableTimeEntryId));
+        this.api.addBillableTimeEntry(timeEntry)
+            .then(newBillableTimeEntryId => this.router.navigate('view/' + newBillableTimeEntryId));
+        
+        // without API refactoring
+        // this.http.fetch('time/billable', {
+        //     method: 'post',
+        //     body: JSON.stringify(timeEntry)
+        // }).then(response => response.text())
+        //    .then(billableTimeEntryId => this.router.navigate('view/' + billableTimeEntryId));
     }
 
-    activate() {
-        return this.http.fetch('clients?onlyActive=true')
-            .then(response => response.json())
+    // without API refactoring
+    // activate() {
+    //     return this.http.fetch('clients?onlyActive=true')
+    //         .then(response => response.json())
+    //         .then(clients => this.clients = clients)
+    //         .then(this.http.fetch('projects')
+    //               .then(response => response.json())
+    //               .then(projects => this.projects = projects)
+    //         );
+    // }
+    
+    // with API refactoring
+    activate(){
+        return this.api.getActiveClientsAsJSON()
             .then(clients => this.clients = clients)
-            .then(this.http.fetch('projects')
-                  .then(response => response.json())
-                  .then(projects => this.projects = projects)
-            );
+            .then(this.api.getProjectsAsJSON()
+                    .then(projects => this.projects = projects));   
     }
 }

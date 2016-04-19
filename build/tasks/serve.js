@@ -35,7 +35,7 @@ gulp.task('serve', ['build'], function(done) {
     proxy: {
         target: "https://thereisno.trystructure.com/api/v1/",
         middleware: function (req, res, next) {
-            req.headers['Cookie']="No cookies";
+            req.headers['Cookie']="Cookie Monster was here!";
             next();  
         }
    }
