@@ -12,7 +12,6 @@ gulp.task('serve', ['build'], function(done) {
     online: false,
     open: false,
     port: 9000,
-    https: false,
     ui: {
         port: 3001
     },
@@ -20,12 +19,11 @@ gulp.task('serve', ['build'], function(done) {
       baseDir: ['.'],
       middleware: function(req, res, next) {
         res.setHeader('Access-Control-Allow-Origin', '*');
-        next();
+        next();    
       }
 
     }
   });
-
    proxy.init({
     online: false,
     open: false,
@@ -37,13 +35,12 @@ gulp.task('serve', ['build'], function(done) {
     proxy: {
         target: "https://thereisno.trystructure.com/api/v1/",
         middleware: function (req, res, next) {
-            res.setHeader('Access-Control-Allow-Credentials', 'true');
-            next();
+            req.headers['Cookie']="Cookie Monster was here!";
+            next();  
         }
    }
   });
 });
-
 // this task utilizes the browsersync plugin
 // to create a dev server instance
 // at http://localhost:9000
