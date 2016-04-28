@@ -16,7 +16,7 @@ gulp.task('serve', ['build'], function(done) {
         next();
       }
     }
-  });
+  }, done);
 });
 
 // this task utilizes the browsersync plugin
