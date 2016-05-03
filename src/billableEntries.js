@@ -27,7 +27,7 @@ export class BillableEntries {
 
      return this.http.fetch('time/billable/ajkarnitis@apterainc.com?fromDate=2016-05-01&toDate=2016-05-31')
             .then(response => response.json())            
-            .then(response => response.json())
+            .then(data => this.entries == data)
             .catch(error => console.log(error));
 
     // this.entries = [
