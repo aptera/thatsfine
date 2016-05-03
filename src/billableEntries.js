@@ -16,7 +16,7 @@ export class BillableEntries {
                         'Content-Type' : 'application/json'
                     }
                 })
-                .withBaseUrl('https://thereisno.trystructure.com/api/v1/')
+                .withBaseUrl('https://localhost:9001/api/v1/')
         });
 
         this.http = http;
