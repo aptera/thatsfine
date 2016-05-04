@@ -1,0 +1,46 @@
+<template>
+    <require from="./ValueConverters/ProjectFilter"></require>
+    
+    <h1>${heading}</h1>
+    
+    <form submit.delegate="addBillableTimeEntry()">
+        <label for="client">Client</label>
+        <br />
+        <select id="client" name="client" value.bind="selectedClientName">
+            <option value.bind="client.Name" repeat.for="client of clients">${client.Name}</option>
+        </select>
+        <br />
+        <label for="project">Project</label>
+        <br />
+        <select id="project" name="project" value.bind="selectedProjectId">
+            <option value.bind="project.Id" repeat.for="project of projects | projectFilter: selectedClientName">${project.Name}</option>
+        </select>
+        <br />
+        <label for="phase">Phase</label>
+        <br />
+        <select id="phase" name="phase" value.bind="selectedPhase">
+            <option value.bind="phase.Id" repeat.for="phase of phases">${phase.Name}</option>
+        </select>
+        <br />
+        <label for="billingType">Billing Type</label>
+        <br />
+        <select id="billingType" name="billingType" value.bind="selectedBillingType">
+            <option value.bind="billingType.Name" repeat.for="billingType of billingTypes">${billingType.Name}</option>
+        </select>
+        <br />
+        <label for="hours">Hours</label>
+        <br />
+        <input type="text" id="hours" name="hours" value.bind="hours" />
+        <br />
+        <label for="minutes">Minutes</label>
+        <br />
+        <input type="text" id="minutes" name="minutes" value.bind="minutes" />
+        <br />
+        <label for="description">Description</label>
+        <br />
+        <textarea id="description" name="description" value.bind="description"></textarea>
+        <hr />
+        <input type="submit" value="Add Time Entry" />
+        <hr />
+    </form>
+</template>
