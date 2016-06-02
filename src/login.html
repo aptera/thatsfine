@@ -1,0 +1,12 @@
+<template>
+    <h1>Please Login</h1>
+    <form submit.delegate="login()">
+        <label style="width: 80px; display: inline-block">User Name:</label>
+        <input type="text" value.bind="userName" />
+        <br />
+        <label style="width: 80px; display: inline-block">Password:</label>
+        <input type="password" value.bind="password" />
+        <br />
+        <input type="submit" value="Login" />
+    </form>
+</template>

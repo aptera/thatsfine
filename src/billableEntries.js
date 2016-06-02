@@ -24,13 +24,13 @@ export class BillableEntries {
   activate() {
      console.log("starting activate")
 
-     return this.http.fetch('time/billable/ajkarnitis@apterainc.com?fromDate=2016-05-01&toDate=2016-05-31')
+     return this.http.fetch('login')
+     .then(response => response.json())
+     .then(userName => this.http.fetch('time/billable/' + userName + '?fromDate=2016-05-01&toDate=2016-05-31')
             .then(response => response.json())  
-            // .then(data => console.log(data))          
-            .then(
-                data => this.entries = data
-                )
-            .catch(error => console.log(error));
+            .then(data => this.entries = data)
+            .catch(error => console.log(error))
+     );
 
 
    }
